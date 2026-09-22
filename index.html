@@ -92,8 +92,9 @@
       <a href="liwan-lake-park-photo-spots/">Photo Spots</a>
       <a href="ru/parke-livankhu-guangzhou/" hreflang="ru">RU</a>
       <a href="zh/liwan-hu-gongyuan-guide/" hreflang="zh-Hans">中文</a>
+      <!-- Single Theme Toggle Button -->
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light mode" style="background:none;border:none;cursor:pointer;font-size:1.2rem;margin-left:1rem;">🌙</button>
     </nav>
-    <!-- app.js progressively enhances this header with theme and menu controls. -->
   </div>
 </header>
 
@@ -257,6 +258,27 @@
 </footer>
 
 <script src="assets/app.js" defer></script>
+
+<!-- Inline script to make the single theme toggle button work -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var toggleBtn = document.getElementById('theme-toggle');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', function() {
+      var currentTheme = document.documentElement.getAttribute('data-theme');
+      var newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('llp-theme', newTheme);
+      
+      // Update button icon
+      toggleBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    });
+
+    // Set initial button icon based on current theme
+    var initialTheme = document.documentElement.getAttribute('data-theme');
+    toggleBtn.textContent = initialTheme === 'dark' ? '☀️' : '🌙';
+  }
+});
+</script>
 </body>
 </html>
-
