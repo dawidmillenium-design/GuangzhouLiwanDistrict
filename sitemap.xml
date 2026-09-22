@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url><loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/</loc><lastmod>2026-09-22</lastmod><priority>1.0</priority></url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-guangzhou/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/parke-livankhu-guangzhou/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwan-hu-gongyuan-guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-guangzhou/"/>
+    <lastmod>2026-09-22</lastmod><priority>0.9</priority>
+  </url>
+  <url><loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/how-to-get-to-liwan-lake-park/</loc><lastmod>2026-09-22</lastmod><priority>0.8</priority></url>
+  <url><loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-opening-hours/</loc><lastmod>2026-09-22</lastmod><priority>0.8</priority></url>
+  <url><loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-photo-spots/</loc><lastmod>2026-09-22</lastmod><priority>0.8</priority></url>
+  <url><loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/things-to-do-liwan-lake-park/</loc><lastmod>2026-09-22</lastmod><priority>0.8</priority></url>
+  <url><loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/food-near-liwan-lake-park/</loc><lastmod>2026-09-22</lastmod><priority>0.8</priority></url>
+  <url><loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-vs-yuexiu-park/</loc><lastmod>2026-09-22</lastmod><priority>0.8</priority></url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/parke-livankhu-guangzhou/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-guangzhou/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwan-hu-gongyuan-guide/"/>
+    <lastmod>2026-09-22</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwan-hu-gongyuan-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-guangzhou/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/parke-livankhu-guangzhou/"/>
+    <lastmod>2026-09-22</lastmod><priority>0.8</priority>
+  </url>
+</urlset>
