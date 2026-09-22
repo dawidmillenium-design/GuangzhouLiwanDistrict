@@ -19,6 +19,7 @@
   var I18N = {
     en: {
       menuOpen: 'Open menu',
+      themeSystem: 'Use device theme',
       menuClose: 'Close menu',
       themeToDark: 'Switch to dark mode',
       themeToLight: 'Switch to light mode',
@@ -32,6 +33,7 @@
     },
     zh: {
       menuOpen: '打开菜单',
+      themeSystem: '使用设备主题',
       menuClose: '关闭菜单',
       themeToDark: '切换到深色模式',
       themeToLight: '切换到浅色模式',
@@ -45,6 +47,7 @@
     },
     ru: {
       menuOpen: 'Открыть меню',
+      themeSystem: 'Тема устройства',
       menuClose: 'Закрыть меню',
       themeToDark: 'Включить тёмную тему',
       themeToLight: 'Включить светлую тему',
@@ -118,6 +121,16 @@
     });
     syncThemeButton();
     header.appendChild(btn);
+    var reset = document.createElement('button');
+    reset.type = 'button';
+    reset.className = 'theme-system';
+    reset.textContent = t('themeSystem');
+    reset.addEventListener('click', function () {
+      try { localStorage.removeItem(THEME_KEY); } catch (e) {}
+      applyTheme(systemTheme());
+      syncThemeButton();
+    });
+    header.appendChild(reset);
   }
 
   
@@ -131,7 +144,7 @@
        - ESC key and backdrop click close it                     */
   function buildDrawer(header) {
     var nav = header.querySelector('.nav');
-    if (!nav) return;
+    if (!nav || typeof HTMLDialogElement === 'undefined') return;
     var burger = document.createElement('button');
     burger.type = 'button';
     burger.className = 'nav-burger';
@@ -140,65 +153,52 @@
     burger.setAttribute('aria-label', t('menuOpen'));
     burger.innerHTML = '<span></span><span></span><span></span>';
     header.appendChild(burger);
-
-    var drawer = document.createElement('nav');
+    var drawer = document.createElement('dialog');
     drawer.id = 'mobile-drawer';
     drawer.className = 'drawer';
     drawer.setAttribute('aria-label', t('menuOpen'));
     drawer.hidden = true;
-    nav.querySelectorAll('a').forEach(function (a) { drawer.appendChild(a.cloneNode(true)); });
-    var backdrop = document.createElement('div');
-    backdrop.className = 'drawer-backdrop';
-    backdrop.hidden = true;
-    document.body.append(backdrop, drawer);
-    var mq = window.matchMedia('(min-width: 641px)');
-    var hideTimer;
-
+    var closeBtn = document.createElement('button');
+    closeBtn.type = 'button';
+    closeBtn.className = 'drawer-close';
+    closeBtn.textContent = t('menuClose') + ' ×';
+    var links = document.createElement('nav');
+    links.setAttribute('aria-label', nav.getAttribute('aria-label') || t('menuOpen'));
+    nav.querySelectorAll('a').forEach(function (a) { links.appendChild(a.cloneNode(true)); });
+    drawer.append(closeBtn, links);
+    document.body.appendChild(drawer);
+    // Native modal dialogs isolate background content and contain keyboard focus.
     function close(restoreFocus) {
-      if (burger.getAttribute('aria-expanded') !== 'true') return;
+      if (!drawer.open) return;
+      drawer.close();
+      drawer.hidden = true;
       document.documentElement.classList.remove('drawer-open');
       burger.setAttribute('aria-expanded', 'false');
-      burger.setAttribute('aria-label', t('menuOpen'));
       burger.classList.remove('is-open');
-      document.removeEventListener('keydown', onKeydown);
-      clearTimeout(hideTimer);
-      // Remove the drawer from keyboard access as soon as it closes.
-      drawer.inert = true;
-      hideTimer = setTimeout(function () { drawer.hidden = true; backdrop.hidden = true; }, 260);
       if (restoreFocus) burger.focus();
     }
-    function open() {
-      clearTimeout(hideTimer); // rapid open/close must not hide the reopened panel
+    burger.addEventListener('click', function () {
       drawer.hidden = false;
-      drawer.inert = false;
-      backdrop.hidden = false;
-      void drawer.offsetWidth;
+      drawer.showModal();
       document.documentElement.classList.add('drawer-open');
       burger.setAttribute('aria-expanded', 'true');
-      burger.setAttribute('aria-label', t('menuClose'));
       burger.classList.add('is-open');
-      document.addEventListener('keydown', onKeydown);
-      var first = drawer.querySelector('a');
-      if (first) first.focus();
-    }
-    function onKeydown(e) {
-      if (e.key === 'Escape') { e.preventDefault(); close(true); }
-      if (e.key !== 'Tab') return;
-      var links = drawer.querySelectorAll('a');
-      if (!links.length) return;
-      var first = links[0], last = links[links.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    }
-    burger.addEventListener('click', function () { burger.getAttribute('aria-expanded') === 'true' ? close(true) : open(); });
-    backdrop.addEventListener('click', function () { close(true); });
-    drawer.addEventListener('click', function (e) { if (e.target.closest('a')) close(false); });
+      closeBtn.focus();
+    });
+    closeBtn.addEventListener('click', function () { close(true); });
+    drawer.addEventListener('cancel', function (e) { e.preventDefault(); close(true); });
+    drawer.addEventListener('click', function (e) {
+      if (e.target.closest('a')) close(false);
+      if (e.target !== drawer) return;
+      var r = drawer.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) close(true);
+    });
+    var mq = window.matchMedia('(min-width: 641px)');
     function onResize() { if (mq.matches) close(false); }
     if (mq.addEventListener) mq.addEventListener('change', onResize);
     else if (mq.addListener) mq.addListener(onResize);
+    document.documentElement.classList.add('drawer-ready');
   }
-
-  
 
   /* ---------- 3. Map hotspots ----------------------------------
      Markup contract (see index.html):
@@ -222,7 +222,10 @@
     var title = document.createElement('h3');
     var desc = document.createElement('p');
     card.append(close, title, desc);
-    map.appendChild(card);
+    card.id = 'map-spot-details';
+    title.id = 'map-spot-title';
+    card.setAttribute('aria-labelledby', title.id);
+    map.insertAdjacentElement('afterend', card);
     var activeSpot = null;
     function hide(restoreFocus) {
       if (!activeSpot) return;
@@ -236,16 +239,13 @@
       activeSpot = spot;
       title.textContent = spot.dataset.spotTitle || '';
       desc.textContent = spot.dataset.spotDesc || '';
-      var x = parseFloat(spot.style.getPropertyValue('--x'));
-      var y = parseFloat(spot.style.getPropertyValue('--y'));
-      card.style.left = Math.min(Math.max(x || 50, 18), 82) + '%';
-      card.style.top = Math.min(Math.max(y || 50, 20), 78) + '%';
       card.hidden = false;
       spot.setAttribute('aria-expanded', 'true');
     }
     close.addEventListener('click', function () { hide(true); });
     map.querySelectorAll('.hotspot').forEach(function (spot) {
       spot.setAttribute('aria-expanded', 'false');
+      spot.setAttribute('aria-controls', card.id);
       spot.addEventListener('click', function (e) {
         e.stopPropagation();
         activeSpot === spot ? hide(false) : show(spot);
@@ -253,7 +253,7 @@
     });
     map.addEventListener('click', function (e) { if (!card.contains(e.target)) hide(false); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && activeSpot) hide(true); });
-    document.addEventListener('click', function (e) { if (activeSpot && !map.contains(e.target)) hide(false); });
+    document.addEventListener('click', function (e) { if (activeSpot && !map.contains(e.target) && !card.contains(e.target)) hide(false); });
   }
 
   
@@ -262,10 +262,10 @@
      Any <img> inside .gallery becomes clickable.                */
   function initLightbox() {
     var gallery = document.querySelector('.gallery');
-    if (!gallery) return;
+    if (!gallery || typeof HTMLDialogElement === 'undefined') return;
     var imgs = Array.from(gallery.querySelectorAll('img'));
     if (!imgs.length) return;
-    var box = document.createElement('div');
+    var box = document.createElement('dialog');
     box.className = 'lightbox';
     box.setAttribute('role', 'dialog');
     box.setAttribute('aria-modal', 'true');
@@ -284,7 +284,7 @@
     next.setAttribute('aria-label', t('lightboxNext'));
     document.body.appendChild(box);
     var big = box.querySelector('img'), caption = box.querySelector('figcaption');
-    var index = 0, opener, hideTimer;
+    var index = 0, opener;
     function render() {
       var img = imgs[index];
       big.src = img.currentSrc || img.src;
@@ -293,12 +293,11 @@
         t('photoCounter', { current: index + 1, total: imgs.length });
     }
     function open(i) {
-      clearTimeout(hideTimer);
       opener = document.activeElement;
       index = i;
       render();
       box.hidden = false;
-      void box.offsetWidth;
+      box.showModal();
       box.classList.add('is-open');
       document.documentElement.classList.add('lightbox-open');
       closeBtn.focus();
@@ -309,7 +308,8 @@
       box.classList.remove('is-open');
       document.documentElement.classList.remove('lightbox-open');
       document.removeEventListener('keydown', onKeydown);
-      hideTimer = setTimeout(function () { box.hidden = true; }, 220);
+      box.close();
+      box.hidden = true;
       if (opener && opener.isConnected) opener.focus();
     }
     function step(delta) { index = (index + delta + imgs.length) % imgs.length; render(); }
@@ -317,18 +317,14 @@
       if (e.key === 'Escape') { e.preventDefault(); close(); }
       else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
       else if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
-      else if (e.key === 'Tab') {
-        var buttons = [closeBtn, prev, next];
-        var n = buttons.indexOf(document.activeElement);
-        e.preventDefault();
-        buttons[(n + (e.shiftKey ? 2 : 1)) % 3].focus();
-      }
     }
+
     imgs.forEach(function (img, i) {
       var button = img.closest('button');
       if (!button) return;
       button.addEventListener('click', function () { open(i); });
     });
+    box.addEventListener('cancel', function (e) { e.preventDefault(); close(); });
     closeBtn.addEventListener('click', close);
     prev.addEventListener('click', function () { step(-1); });
     next.addEventListener('click', function () { step(1); });
@@ -339,7 +335,8 @@
 
   /* ---------- 5. Lazy media fade-in ----------------------------
      Native loading="lazy" does the fetching; this observer only
-     adds the fade-in class, and doubles as a fallback trigger.  */
+     adds the fade-in class. Browsers without native lazy loading
+     fetch normally; the observer is not a network-loading polyfill.  */
   function initLazyMedia() {
     var media = document.querySelectorAll('img[loading="lazy"]');
     if (!('IntersectionObserver' in window)) {
@@ -363,6 +360,8 @@
 
   /* ---------- boot ------------------------------------------- */
   function init() {
+    var saved = savedTheme();
+    applyTheme(saved === 'dark' || saved === 'light' ? saved : systemTheme());
     var header = document.querySelector('.site-header .wrap');
     if (header) {
       buildThemeToggle(header);
@@ -379,3 +378,4 @@
     init();
   }
 })();
+
