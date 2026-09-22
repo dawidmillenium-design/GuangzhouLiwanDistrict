@@ -1,52 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Liwan Lake Park Guide — Guangzhou's Old Town Lake Park (荔湾湖公园)</title>
 <meta name="description" content="The complete English, Russian and Chinese guide to Liwan Lake Park (Liwanhu Park, 荔湾湖公园) in Guangzhou: transport, opening hours, photo spots, Cantonese opera, food and itineraries.">
+<meta name="theme-color" content="#faf7f2">
+
+<!-- Open Graph (Facebook / LinkedIn / Telegram) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Liwan Lake Park Guide">
+<meta property="og:title" content="Liwan Lake Park, Guangzhou — Complete Visitor Guide">
+<meta property="og:description" content="Transport, opening hours, photo spots, Cantonese opera culture and food around Liwan Lake Park (荔湾湖公园) in old Guangzhou.">
+<meta property="og:url" content="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/">
+<meta property="og:image" content="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/assets/img/liwan-lake-park-pavilion-reflection.svg">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="ru_RU">
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Liwan Lake Park, Guangzhou — Complete Visitor Guide">
+<meta name="twitter:description" content="Old-town lake park guide: opera, pavilions, lotus, Xiguan food.">
+<meta name="twitter:image" content="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/assets/img/liwan-lake-park-pavilion-reflection.svg">
+<!-- WeChat / Weibo pick up og:* plus these itemprops -->
+<meta itemprop="name" content="Liwan Lake Park, Guangzhou — Complete Visitor Guide">
+<meta itemprop="description" content="荔湾湖公园完整指南：交通、开放时间、拍照机位、粤曲与西关美食。">
+<meta itemprop="image" content="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/assets/img/liwan-lake-park-pavilion-reflection.svg">
+
 <link rel="stylesheet" href="assets/style.css">
 <link rel="canonical" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/">
 <link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-guangzhou/">
 <link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/parke-livankhu-guangzhou/">
 <link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwan-hu-gongyuan-guide/">
 <link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-guangzhou/">
+
+<!-- Pre-paint theme: prevents dark-mode flash (FOUC-free) -->
+<script>
+(function(){try{
+  var s=localStorage.getItem('llp-theme');
+  var t=s||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+  document.documentElement.setAttribute('data-theme',t);
+}catch(e){}})();
+</script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Liwan Lake Park Guide",
-  "url": "https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/",
-  "inLanguage": ["en", "ru", "zh-Hans"],
-  "about": {
-    "@type": ["TouristAttraction", "Park"],
-    "name": "Liwan Lake Park",
-    "alternateName": ["Liwanhu Park", "Liwan Hu Park", "荔湾湖公园", "Парк Ливаньху"],
-    "address": {"@type": "PostalAddress", "addressLocality": "Liwan District, Guangzhou", "addressRegion": "Guangdong", "addressCountry": "CN"}
-  }
+  "@graph": [
+    {
+      "@type": ["TouristAttraction", "Park"],
+      "@id": "https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/#park",
+      "name": "Liwan Lake Park",
+      "alternateName": ["Liwanhu Park", "Liwan Hu Park", "荔湾湖公园", "Парк Ливаньху"],
+      "description": "Public lake park in Guangzhou's Liwan District (Xiguan), known for traditional pavilions, Cantonese opera singing circles, lotus beds and old-town atmosphere.",
+      "url": "https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/",
+      "image": "https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/assets/img/liwan-lake-park-pavilion-reflection.svg",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Longjin West Road",
+        "addressLocality": "Liwan District, Guangzhou",
+        "addressRegion": "Guangdong",
+        "addressCountry": "CN"
+      },
+      "geo": { "@type": "GeoCoordinates", "latitude": 23.1213, "longitude": 113.2374 },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+        "opens": "06:00",
+        "closes": "22:00"
+      },
+      "isAccessibleForFree": true,
+      "publicAccess": true
+    },
+    {
+      "@type": "WebSite",
+      "name": "Liwan Lake Park Guide",
+      "url": "https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/",
+      "inLanguage": ["en", "ru", "zh-Hans"]
+    }
+  ]
 }
 </script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="./">Liwan Lake Park <span>Guide</span></a>
-    <nav class="nav">
+    <nav class="nav" aria-label="Primary">
       <a href="liwan-lake-park-guangzhou/">Visitor Guide</a>
       <a href="how-to-get-to-liwan-lake-park/">Getting There</a>
       <a href="liwan-lake-park-photo-spots/">Photo Spots</a>
-      <a href="ru/parke-livankhu-guangzhou/">RU</a>
-      <a href="zh/liwan-hu-gongyuan-guide/">中文</a>
+      <a href="ru/parke-livankhu-guangzhou/" hreflang="ru">RU</a>
+      <a href="zh/liwan-hu-gongyuan-guide/" hreflang="zh-Hans">中文</a>
     </nav>
+    <!-- app.js injects the theme toggle and hamburger button here -->
   </div>
 </header>
 
+<main id="main">
 <section class="hero">
   <div class="wrap">
     <div class="kicker">Guangzhou · Liwan District · 荔湾湖公园</div>
     <h1>Liwan Lake Park, Guangzhou — the old-town lake park where Cantonese culture is still alive</h1>
     <p class="lede">A complete, field-researched visitor guide to Liwanhu Park: how to get there, when to go, where to photograph pavilions and lotus ponds, and how to combine it with Shangxiajiu and Yongqingfang.</p>
-    <p class="lang-switch">Also available in <a href="ru/parke-livankhu-guangzhou/">Русский</a> · <a href="zh/liwan-hu-gongyuan-guide/">简体中文</a></p>
+    <p class="lang-switch">Also available in <a href="ru/parke-livankhu-guangzhou/" hreflang="ru">Русский</a> · <a href="zh/liwan-hu-gongyuan-guide/" hreflang="zh-Hans">简体中文</a></p>
   </div>
 </section>
 
@@ -59,9 +118,62 @@
   <div class="facts">
     <div class="fact"><b>Location</b>Liwan District, Guangzhou, Guangdong, China</div>
     <div class="fact"><b>Chinese name</b>荔湾湖公园 (Lìwānhú Gōngyuán)</div>
-    <div class="fact"><b>Best for</b>Local culture, photography, relaxed walks</div>
+    <div class="fact"><b>Entry</b>Public park; generally free (verify locally)</div>
     <div class="fact"><b>Typical visit</b>1–3 hours; half-day with nearby streets</div>
   </div>
+
+  <!-- Interactive map with hotspots (vanilla JS tooltips) -->
+  <section class="section" aria-labelledby="map-heading">
+    <h2 id="map-heading">Explore the park map</h2>
+    <p class="sub">Tap a marker to learn about each key spot. Schematic map — not to scale.</p>
+    <div class="park-map" role="group" aria-label="Schematic map of Liwan Lake Park">
+      <svg viewBox="0 0 800 420" aria-hidden="true">
+        <rect width="800" height="420" fill="oklch(93% 0.03 145 / .35)"/>
+        <path d="M60 300 Q200 200 340 260 T660 240 Q740 260 720 330 Q600 390 420 350 Q180 400 60 300 Z" fill="oklch(72% 0.08 200 / .5)"/>
+        <path d="M340 260 Q360 180 460 170 Q560 165 660 240" fill="none" stroke="oklch(72% 0.08 200 / .5)" stroke-width="26" stroke-linecap="round"/>
+        <path d="M120 330 Q400 250 700 300" fill="none" stroke="oklch(55% 0.06 70 / .6)" stroke-width="5" stroke-dasharray="2 10" stroke-linecap="round"/>
+        <rect x="590" y="330" width="150" height="40" rx="6" fill="oklch(85% 0.04 80)"/>
+        <text x="665" y="356" text-anchor="middle" font-size="15" fill="oklch(40% 0.04 70)" font-family="sans-serif">Longjin West Rd 龙津西路</text>
+        <text x="380" y="300" text-anchor="middle" font-size="16" fill="oklch(40% 0.06 210)" font-family="sans-serif">Liwan Lake 荔湾湖</text>
+      </svg>
+      <button type="button" class="hotspot" style="--x:46%;--y:44%"
+        data-spot-title="Lakeside Pavilion"
+        data-spot-desc="The classic reflection photo spot — calmest before 9 am on windless mornings."
+        aria-label="Map spot: Lakeside Pavilion">1</button>
+      <button type="button" class="hotspot" style="--x:63%;--y:26%"
+        data-spot-title="Moon Bridge"
+        data-spot-desc="Arched bridge linking the lake arms; best at golden hour for backlit rooflines."
+        aria-label="Map spot: Moon Bridge">2</button>
+      <button type="button" class="hotspot" style="--x:28%;--y:62%"
+        data-spot-title="Opera Corner"
+        data-spot-desc="Informal Cantonese opera singing most mornings — listen from the edge of the circle."
+        aria-label="Map spot: Opera Corner">3</button>
+      <button type="button" class="hotspot" style="--x:82%;--y:64%"
+        data-spot-title="Tea House Row"
+        data-spot-desc="Exit east to Longjin West Road for morning dim sum with the post-tai-chi crowd."
+        aria-label="Map spot: Tea House Row">4</button>
+    </div>
+  </section>
+
+  <!-- Gallery: click any image for the lightbox -->
+  <section class="section" aria-labelledby="gallery-heading">
+    <h2 id="gallery-heading">Photo gallery</h2>
+    <p class="sub">Illustrated previews — replace with your original photos for image-SEO impact.</p>
+    <div class="gallery">
+      <img src="assets/img/liwan-lake-park-pavilion-reflection.svg"
+           alt="Traditional pavilion reflected in the lake at Liwan Lake Park in Guangzhou's Liwan District"
+           data-caption="Lakeside pavilion reflections on a calm morning" loading="lazy" width="800" height="600">
+      <img src="assets/img/liwan-lake-park-moon-bridge-sunset.svg"
+           alt="Moon bridge at Liwan Lake Park silhouetted against golden hour light"
+           data-caption="Moon bridge at golden hour" loading="lazy" width="800" height="600">
+      <img src="assets/img/liwan-lake-park-lotus-summer.svg"
+           alt="Pink lotus flowers blooming on the lake at Liwan Lake Park in summer"
+           data-caption="Lotus season, June to August" loading="lazy" width="800" height="600">
+      <img src="assets/img/liwan-lake-park-cantonese-opera-local-life.svg"
+           alt="Local singers performing Cantonese opera in a pavilion at Liwan Lake Park"
+           data-caption="Morning Cantonese opera singing circle" loading="lazy" width="800" height="600">
+    </div>
+  </section>
 
   <section class="section">
     <h2>Start here: the complete visitor guide</h2>
@@ -79,7 +191,7 @@
       </a>
       <a class="card" href="liwan-lake-park-opening-hours/">
         <span class="tag">Practical</span>
-        <h3>Opening Hours & Tickets</h3>
+        <h3>Opening Hours &amp; Tickets</h3>
         <p>Entry policy, best visiting windows, holiday crowds and what to verify before you go.</p>
       </a>
     </div>
@@ -129,6 +241,7 @@
     </div>
   </section>
 </div>
+</main>
 
 <footer>
   <div class="wrap">
@@ -136,5 +249,7 @@
     <span>Last updated: September 2026</span>
   </div>
 </footer>
+
+<script src="assets/app.js" defer></script>
 </body>
 </html>
