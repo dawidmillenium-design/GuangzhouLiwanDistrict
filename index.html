@@ -31,6 +31,7 @@
 <meta itemprop="image" content="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/assets/img/liwan-lake-park-social.png">
 
 <link rel="stylesheet" href="assets/style.css">
+<!-- app.js loaded EXACTLY ONCE (duplicate load removed) -->
 <script src="assets/app.js" defer></script>
 <link rel="canonical" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/">
 <link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-guangzhou/">
@@ -46,6 +47,17 @@
   document.documentElement.setAttribute('data-theme',t);
 }catch(e){}})();
 </script>
+
+<!-- Single, clean style for the one remaining theme toggle -->
+<style>
+.theme-toggle{
+  background:transparent;border:1px solid rgba(0,0,0,.15);border-radius:999px;
+  width:2.35rem;height:2.35rem;display:inline-flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1.05rem;line-height:1;margin-left:.9rem;vertical-align:middle;
+}
+[data-theme="dark"] .theme-toggle{border-color:rgba(255,255,255,.25);}
+.theme-toggle:focus-visible{outline:2px solid #b4633a;outline-offset:2px;}
+</style>
 
 <script type="application/ld+json">
 {
@@ -92,8 +104,8 @@
       <a href="liwan-lake-park-photo-spots/">Photo Spots</a>
       <a href="ru/parke-livankhu-guangzhou/" hreflang="ru">RU</a>
       <a href="zh/liwan-hu-gongyuan-guide/" hreflang="zh-Hans">中文</a>
-      <!-- Single Theme Toggle Button -->
-      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light mode" style="background:none;border:none;cursor:pointer;font-size:1.2rem;margin-left:1rem;">🌙</button>
+      <!-- THE ONLY theme control on the page -->
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark mode">🌙</button>
     </nav>
   </div>
 </header>
@@ -248,33 +260,85 @@
 </div>
 </main>
 
-</main>
 <footer>
   <div class="wrap">
     <span>Liwan Lake Park Guide — an independent travel resource. Not affiliated with any authority. Verify practical details locally before visiting.</span>
     <span>Last updated: September 2026</span>
   </div>
-<p class="wrap"><a href="https://github.com/dawidmillenium-design/GuangzhouLiwanDistrict/issues/new">Report a correction</a></p>
+  <p class="wrap"><a href="https://github.com/dawidmillenium-design/GuangzhouLiwanDistrict/issues/new">Report a correction</a></p>
 </footer>
 
-<script src="assets/app.js" defer></script>
-
-<!-- Inline script to make the single theme toggle button work -->
+<!--
+  THEME-UI GUARD
+  1) Deletes every injected "Use device theme" control (wherever app.js puts it).
+  2) Keeps exactly ONE theme toggle (#theme-toggle) and removes any extra injected toggles.
+  3) Re-binds the click handler on a cloned node so no duplicate listeners survive.
+  Runs on DOMContentLoaded, on load, and via MutationObserver for late injections.
+-->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  var toggleBtn = document.getElementById('theme-toggle');
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', function() {
-      var currentTheme = document.documentElement.getAttribute('data-theme');
-      var newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('llp-theme', newTheme);
-      
-      // Update button icon
-      toggleBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-    });
+(function () {
+  var DEVICE_THEME_RE = /^use device theme$/i;
+  var MOON_SUN_RE = /^[\u{1F319}\u{1F31B}\u{1F31C}\u{2600}\u{FE0F}\u{2601}\u{25D0}\u{25D1}\s]+$/u;
+
+  function looksLikeThemeControl(el) {
+    if (!el || el.nodeType !== 1) return false;
+    var tag = el.tagName;
+    if (tag !== 'BUTTON' && tag !== 'A' && (el.getAttribute('role') || '') !== 'button') return false;
+    var hay = ((el.getAttribute('aria-label') || '') + ' ' + (el.getAttribute('class') || '') + ' ' + (el.id || '')).toLowerCase();
+    if (/theme|dark[\s-]?mode|light[\s-]?mode|device[\s-]?theme|mode[\s-]?switch/.test(hay)) return true;
+    var txt = (el.textContent || '').trim();
+    return MOON_SUN_RE.test(txt) && txt.length <= 3;
   }
-});
+
+  function cleanup() {
+    // 1) Remove all "Use device theme" controls and their now-empty wrappers
+    document.querySelectorAll('button, a, [role="button"], span, div, li').forEach(function (el) {
+      if (DEVICE_THEME_RE.test((el.textContent || '').trim())) el.remove();
+    });
+    // 2) Keep only ONE theme toggle: prefer #theme-toggle, else the first found
+    var toggles = [];
+    document.querySelectorAll('button, a, [role="button"]').forEach(function (el) {
+      if (looksLikeThemeControl(el)) toggles.push(el);
+    });
+    var preferred = document.getElementById('theme-toggle');
+    var keeper = preferred || toggles[0] || null;
+    toggles.forEach(function (el) { if (el !== keeper) el.remove(); });
+  }
+
+  function bindSingleToggle() {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn || btn.dataset.bound === '1') return;
+    var clone = btn.cloneNode(true);          // clone drops listeners attached by other scripts
+    btn.parentNode.replaceChild(clone, btn);
+    clone.dataset.bound = '1';
+    function sync() {
+      var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      clone.textContent = dark ? '☀️' : '🌙';
+      clone.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+    clone.addEventListener('click', function () {
+      var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('llp-theme', next); } catch (e) {}
+      sync();
+    });
+    sync();
+  }
+
+  function runAll() { cleanup(); bindSingleToggle(); }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runAll);
+  } else { runAll(); }
+  window.addEventListener('load', function () { runAll(); setTimeout(runAll, 250); });
+
+  // Catch widgets injected after load
+  if ('MutationObserver' in window) {
+    var mo = new MutationObserver(function () { cleanup(); });
+    mo.observe(document.documentElement, { childList: true, subtree: true });
+    setTimeout(function () { mo.disconnect(); }, 8000);
+  }
+})();
 </script>
 </body>
 </html>
