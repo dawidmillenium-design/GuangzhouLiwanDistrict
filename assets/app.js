@@ -1,345 +1,400 @@
-/**
- * Liwan Lake Park Guide — Vanilla JS Enhancements
- * Features: Mobile navigation, Dark/Light mode, Lightbox gallery, Map hotspots, Lazy loading
- */
-
-(function() {
+/* ============================================================
+   Liwan Lake Park Guide — app.js (Vanilla ES6+, no frameworks)
+   Modules:
+     1. Theme      — system-aware dark mode + manual toggle
+     2. NavDrawer  — accessible mobile drawer (auto-built from .nav)
+     3. Hotspots   — interactive map tooltip cards
+     4. Lightbox   — gallery viewer with prev/next + keyboard
+     5. LazyMedia  — IntersectionObserver fade-in fallback
+   The script progressively enhances ANY page containing the
+   existing markup patterns, so /zh and /ru pages share the same behavior and translations.
+   ============================================================ */
+(function () {
   'use strict';
 
-  // ---------- DOM Elements ----------
-  const header = document.querySelector('.site-header');
-  const nav = document.querySelector('.nav');
-  const body = document.body;
+  /* ---------- 0. i18n strings ----------------------------------
+     HOW TO LOCALIZE: detect page language from <html lang> and
+     serve the matching dictionary. To add a language, copy the
+     "en" block, translate the values, and add its key below.    */
+  var I18N = {
+    en: {
+      menuOpen: 'Open menu',
+      themeSystem: 'Use device theme',
+      menuClose: 'Close menu',
+      themeToDark: 'Switch to dark mode',
+      themeToLight: 'Switch to light mode',
+      mapTitle: 'Park map',
+      hotspotClose: 'Close spot details',
+      galleryLabel: 'Photo gallery',
+      lightboxClose: 'Close viewer',
+      lightboxPrev: 'Previous photo',
+      lightboxNext: 'Next photo',
+      photoCounter: 'Photo {current} of {total}'
+    },
+    zh: {
+      menuOpen: '打开菜单',
+      themeSystem: '使用设备主题',
+      menuClose: '关闭菜单',
+      themeToDark: '切换到深色模式',
+      themeToLight: '切换到浅色模式',
+      mapTitle: '公园地图',
+      hotspotClose: '关闭详情',
+      galleryLabel: '照片画廊',
+      lightboxClose: '关闭查看器',
+      lightboxPrev: '上一张',
+      lightboxNext: '下一张',
+      photoCounter: '第 {current} / {total} 张'
+    },
+    ru: {
+      menuOpen: 'Открыть меню',
+      themeSystem: 'Тема устройства',
+      menuClose: 'Закрыть меню',
+      themeToDark: 'Включить тёмную тему',
+      themeToLight: 'Включить светлую тему',
+      mapTitle: 'Карта парка',
+      hotspotClose: 'Закрыть описание',
+      galleryLabel: 'Фотогалерея',
+      lightboxClose: 'Закрыть просмотр',
+      lightboxPrev: 'Предыдущее фото',
+      lightboxNext: 'Следующее фото',
+      photoCounter: 'Фото {current} из {total}'
+    }
+  };
+  var lang = (document.documentElement.lang || 'en').slice(0, 2).toLowerCase();
+  var T = I18N[lang] || I18N.en;
+
+  function t(key, vars) {
+    var s = T[key] || I18N.en[key] || key;
+    if (vars) {
+      Object.keys(vars).forEach(function (k) {
+        s = s.replace('{' + k + '}', vars[k]);
+      });
+    }
+    return s;
+  }
+
+  /* ---------- 1. Theme (dark / light / system) -----------------
+     Stored choice wins; otherwise follow prefers-color-scheme.
+     A tiny inline script in <head> applies the theme pre-paint;
+     this module keeps the toggle button in sync afterwards.     */
+  var THEME_KEY = 'llp-theme';
+
+  function systemTheme() {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', theme === 'dark' ? '#241f19' : '#faf7f2');
+  }
+  function currentTheme() {
+    return document.documentElement.getAttribute('data-theme') || systemTheme();
+  }
+
+  // React to OS-level changes when the user has not chosen manually.
+  var scheme = window.matchMedia('(prefers-color-scheme: dark)');
+  function savedTheme() { try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; } }
+  function onSchemeChange() { if (!savedTheme()) { applyTheme(systemTheme()); syncThemeButton(); } }
+  if (scheme.addEventListener) scheme.addEventListener('change', onSchemeChange);
+  else if (scheme.addListener) scheme.addListener(onSchemeChange);
+  var themeButton;
+  function syncThemeButton() {
+    if (!themeButton) return;
+    var dark = currentTheme() === 'dark';
+    themeButton.setAttribute('aria-label', dark ? t('themeToLight') : t('themeToDark'));
+    themeButton.setAttribute('aria-pressed', String(dark));
+    themeButton.innerHTML = dark
+      ? '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.5" y1="4.5" x2="6.5" y2="6.5"/><line x1="17.5" y1="17.5" x2="19.5" y2="19.5"/><line x1="4.5" y1="19.5" x2="6.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="19.5" y2="4.5"/></g></svg>'
+      : '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.6 14.4A8.8 8.8 0 0 1 9.6 3.4a.7.7 0 0 0-.9-.9 10.2 10.2 0 1 0 12.8 12.8.7.7 0 0 0-.9-.9Z"/></svg>';
+  }
+
+  function buildThemeToggle(header) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'theme-toggle';
+    themeButton = btn;
+    btn.addEventListener('click', function () {
+      var next = currentTheme() === 'dark' ? 'light' : 'dark';
+      try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* private browsing: theme still works on this page */ }
+      applyTheme(next);
+      syncThemeButton();
+    });
+    syncThemeButton();
+    header.appendChild(btn);
+    var reset = document.createElement('button');
+    reset.type = 'button';
+    reset.className = 'theme-system';
+    reset.textContent = t('themeSystem');
+    reset.addEventListener('click', function () {
+      try { localStorage.removeItem(THEME_KEY); } catch (e) {}
+      applyTheme(systemTheme());
+      syncThemeButton();
+    });
+    header.appendChild(reset);
+  }
+
   
-  // ---------- Mobile Navigation ----------
-  function initMobileNav() {
-    // Create hamburger button if not exists
-    let menuBtn = document.querySelector('.menu-toggle');
-    if (!menuBtn && nav) {
-      menuBtn = document.createElement('button');
-      menuBtn.className = 'menu-toggle';
-      menuBtn.setAttribute('aria-expanded', 'false');
-      menuBtn.setAttribute('aria-controls', 'primary-navigation');
-      menuBtn.setAttribute('aria-label', 'Toggle navigation menu');
-      menuBtn.innerHTML = `
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-      `;
-      
-      const wrap = header.querySelector('.wrap');
-      wrap.insertBefore(menuBtn, nav);
-      
-      // Add ID to nav for aria-controls
-      nav.id = 'primary-navigation';
-      
-      // Toggle menu
-      menuBtn.addEventListener('click', () => {
-        const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
-        menuBtn.setAttribute('aria-expanded', !isExpanded);
-        nav.classList.toggle('nav-open', !isExpanded);
-        
-        // Lock body scroll when menu is open
-        if (!isExpanded) {
-          body.style.overflow = 'hidden';
-          // Focus first nav item for accessibility
-          const firstLink = nav.querySelector('a');
-          if (firstLink) firstLink.focus();
-        } else {
-          body.style.overflow = '';
-        }
-      });
-      
-      // Close on Escape key
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && nav.classList.contains('nav-open')) {
-          menuBtn.setAttribute('aria-expanded', 'false');
-          nav.classList.remove('nav-open');
-          body.style.overflow = '';
-          menuBtn.focus();
-        }
-      });
-      
-      // Close when clicking backdrop (on mobile)
-      document.addEventListener('click', (e) => {
-        if (nav.classList.contains('nav-open') && 
-            !nav.contains(e.target) && 
-            !menuBtn.contains(e.target)) {
-          menuBtn.setAttribute('aria-expanded', 'false');
-          nav.classList.remove('nav-open');
-          body.style.overflow = '';
-        }
-      });
-    }
-  }
 
-  // ---------- Dark/Light Mode Toggle ----------
-  function initThemeToggle() {
-    const themeKey = 'liwan-theme-preference';
-    const root = document.documentElement;
-    
-    // Check for saved preference or system preference
-    const savedTheme = localStorage.getItem(themeKey);
-    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme) {
-      root.setAttribute('data-theme', savedTheme);
-    } else if (systemDark) {
-      root.setAttribute('data-theme', 'dark');
+  /* ---------- 2. Mobile navigation drawer ----------------------
+     CRITICAL FIX: the old CSS hid .nav below 640px with no
+     replacement. Here we auto-build an accessible drawer:
+       - hamburger button with aria-expanded / aria-controls
+       - focus moves into drawer on open, back to button on close
+       - body scroll locked while open
+       - ESC key and backdrop click close it                     */
+  function buildDrawer(header) {
+    var nav = header.querySelector('.nav');
+    if (!nav || typeof HTMLDialogElement === 'undefined') return;
+    var burger = document.createElement('button');
+    burger.type = 'button';
+    burger.className = 'nav-burger';
+    burger.setAttribute('aria-expanded', 'false');
+    burger.setAttribute('aria-controls', 'mobile-drawer');
+    burger.setAttribute('aria-label', t('menuOpen'));
+    burger.innerHTML = '<span></span><span></span><span></span>';
+    header.appendChild(burger);
+    var drawer = document.createElement('dialog');
+    drawer.id = 'mobile-drawer';
+    drawer.className = 'drawer';
+    drawer.setAttribute('aria-label', t('menuOpen'));
+    drawer.hidden = true;
+    var closeBtn = document.createElement('button');
+    closeBtn.type = 'button';
+    closeBtn.className = 'drawer-close';
+    closeBtn.textContent = t('menuClose') + ' ×';
+    var links = document.createElement('nav');
+    links.setAttribute('aria-label', nav.getAttribute('aria-label') || t('menuOpen'));
+    nav.querySelectorAll('a').forEach(function (a) { links.appendChild(a.cloneNode(true)); });
+    drawer.append(closeBtn, links);
+    document.body.appendChild(drawer);
+    // Native modal dialogs isolate background content and contain keyboard focus.
+    function close(restoreFocus) {
+      if (!drawer.open) return;
+      drawer.close();
+      drawer.hidden = true;
+      document.documentElement.classList.remove('drawer-open');
+      burger.setAttribute('aria-expanded', 'false');
+      burger.classList.remove('is-open');
+      if (restoreFocus) burger.focus();
     }
-    
-    // Create toggle button
-    let themeBtn = document.querySelector('.theme-toggle');
-    if (!themeBtn && header) {
-      themeBtn = document.createElement('button');
-      themeBtn.className = 'theme-toggle';
-      themeBtn.setAttribute('aria-label', 'Toggle dark/light mode');
-      themeBtn.innerHTML = `
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="5"/>
-          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-        </svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
-      `;
-      
-      const wrap = header.querySelector('.wrap');
-      wrap.appendChild(themeBtn);
-      
-      // Toggle theme
-      themeBtn.addEventListener('click', () => {
-        const currentTheme = root.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-theme', newTheme);
-        localStorage.setItem(themeKey, newTheme);
-      });
-      
-      // Listen for system changes
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        if (!localStorage.getItem(themeKey)) {
-          root.setAttribute('data-theme', e.matches ? 'dark' : 'light');
-        }
-      });
-    }
-  }
-
-  // ---------- Lightbox Gallery ----------
-  function initLightbox() {
-    const galleryImages = document.querySelectorAll('.gallery-img, .photo-spot img, article img[data-gallery]');
-    
-    if (galleryImages.length === 0) return;
-    
-    // Create lightbox overlay
-    const lightbox = document.createElement('div');
-    lightbox.className = 'lightbox';
-    lightbox.setAttribute('role', 'dialog');
-    lightbox.setAttribute('aria-modal', 'true');
-    lightbox.setAttribute('aria-label', 'Image viewer');
-    lightbox.innerHTML = `
-      <div class="lightbox-backdrop"></div>
-      <div class="lightbox-content">
-        <button class="lightbox-close" aria-label="Close image viewer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M18 6L6 18M6 6l12 12"/>
-          </svg>
-        </button>
-        <img class="lightbox-image" src="" alt="">
-        <div class="lightbox-caption"></div>
-        <button class="lightbox-prev" aria-label="Previous image">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M15 18l-6-6 6-6"/>
-          </svg>
-        </button>
-        <button class="lightbox-next" aria-label="Next image">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 18l6-6-6-6"/>
-          </svg>
-        </button>
-      </div>
-    `;
-    
-    body.appendChild(lightbox);
-    
-    let currentIndex = 0;
-    const images = Array.from(galleryImages);
-    
-    function openLightbox(index) {
-      currentIndex = index;
-      const img = images[currentIndex];
-      const lightboxImg = lightbox.querySelector('.lightbox-image');
-      const caption = lightbox.querySelector('.lightbox-caption');
-      
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt || 'Gallery image';
-      caption.textContent = img.dataset.caption || img.alt || '';
-      
-      lightbox.classList.add('lightbox-open');
-      body.style.overflow = 'hidden';
-      
-      // Focus trap
-      lightbox.querySelector('.lightbox-close').focus();
-    }
-    
-    function closeLightbox() {
-      lightbox.classList.remove('lightbox-open');
-      body.style.overflow = '';
-    }
-    
-    function showPrev() {
-      currentIndex = (currentIndex - 1 + images.length) % images.length;
-      openLightbox(currentIndex);
-    }
-    
-    function showNext() {
-      currentIndex = (currentIndex + 1) % images.length;
-      openLightbox(currentIndex);
-    }
-    
-    // Event listeners
-    images.forEach((img, index) => {
-      img.style.cursor = 'pointer';
-      img.addEventListener('click', () => openLightbox(index));
-      img.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          openLightbox(index);
-        }
-      });
-      img.setAttribute('tabindex', '0');
-      img.setAttribute('role', 'button');
-      img.setAttribute('aria-label', `View ${img.alt || 'image'} in full screen`);
+    burger.addEventListener('click', function () {
+      drawer.hidden = false;
+      drawer.showModal();
+      document.documentElement.classList.add('drawer-open');
+      burger.setAttribute('aria-expanded', 'true');
+      burger.classList.add('is-open');
+      closeBtn.focus();
     });
-    
-    lightbox.querySelector('.lightbox-backdrop').addEventListener('click', closeLightbox);
-    lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
-    lightbox.querySelector('.lightbox-prev').addEventListener('click', showPrev);
-    lightbox.querySelector('.lightbox-next').addEventListener('click', showNext);
-    
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (!lightbox.classList.contains('lightbox-open')) return;
-      
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowLeft') showPrev();
-      if (e.key === 'ArrowRight') showNext();
+    closeBtn.addEventListener('click', function () { close(true); });
+    drawer.addEventListener('cancel', function (e) { e.preventDefault(); close(true); });
+    drawer.addEventListener('click', function (e) {
+      if (e.target.closest('a')) close(false);
+      if (e.target !== drawer) return;
+      var r = drawer.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) close(true);
     });
+    var mq = window.matchMedia('(min-width: 641px)');
+    function onResize() { if (mq.matches) close(false); }
+    if (mq.addEventListener) mq.addEventListener('change', onResize);
+    else if (mq.addListener) mq.addListener(onResize);
+    document.documentElement.classList.add('drawer-ready');
   }
 
-  // ---------- Map Hotspots ----------
-  function initMapHotspots() {
-    const mapContainer = document.querySelector('.map-container');
-    if (!mapContainer) return;
-    
-    const hotspotsData = mapContainer.dataset.hotspots || '[]';
-    const hotspots = JSON.parse(hotspotsData);
-    
-    hotspots.forEach((spot, index) => {
-      const hotspot = document.createElement('button');
-      hotspot.className = 'map-hotspot';
-      hotspot.style.top = spot.y + '%';
-      hotspot.style.left = spot.x + '%';
-      hotspot.setAttribute('aria-label', spot.name);
-      hotspot.setAttribute('aria-describedby', `hotspot-tooltip-${index}`);
-      hotspot.innerHTML = `<span class="hotspot-marker"></span>`;
-      
-      const tooltip = document.createElement('div');
-      tooltip.className = 'hotspot-tooltip';
-      tooltip.id = `hotspot-tooltip-${index}`;
-      tooltip.innerHTML = `
-        <h4>${spot.name}</h4>
-        <p>${spot.description || ''}</p>
-      `;
-      
-      hotspot.appendChild(tooltip);
-      mapContainer.appendChild(hotspot);
-      
-      // Toggle tooltip on click for accessibility
-      hotspot.addEventListener('click', (e) => {
+  /* ---------- 3. Map hotspots ----------------------------------
+     Markup contract (see index.html):
+       <div class="park-map">
+         <button class="hotspot" style="--x:30%;--y:40%"
+                 data-spot-title="..." data-spot-desc="...">…</button>
+       </div>                                                    */
+  function initHotspots() {
+    var map = document.querySelector('.park-map');
+    if (!map) return;
+    var card = document.createElement('div');
+    card.className = 'hotspot-card';
+    card.setAttribute('role', 'region');
+    card.setAttribute('aria-live', 'polite');
+    card.hidden = true;
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'hotspot-close';
+    close.setAttribute('aria-label', t('hotspotClose'));
+    close.textContent = '×';
+    var title = document.createElement('h3');
+    var desc = document.createElement('p');
+    card.append(close, title, desc);
+    card.id = 'map-spot-details';
+    title.id = 'map-spot-title';
+    card.setAttribute('aria-labelledby', title.id);
+    map.insertAdjacentElement('afterend', card);
+    var activeSpot = null;
+    function hide(restoreFocus) {
+      if (!activeSpot) return;
+      activeSpot.setAttribute('aria-expanded', 'false');
+      if (restoreFocus) activeSpot.focus();
+      activeSpot = null;
+      card.hidden = true;
+    }
+    function show(spot) {
+      if (activeSpot) hide(false);
+      activeSpot = spot;
+      title.textContent = spot.dataset.spotTitle || '';
+      desc.textContent = spot.dataset.spotDesc || '';
+      card.hidden = false;
+      spot.setAttribute('aria-expanded', 'true');
+    }
+    close.addEventListener('click', function () { hide(true); });
+    map.querySelectorAll('.hotspot').forEach(function (spot) {
+      spot.setAttribute('aria-expanded', 'false');
+      spot.setAttribute('aria-controls', card.id);
+      spot.addEventListener('click', function (e) {
         e.stopPropagation();
-        const isOpen = hotspot.classList.contains('tooltip-open');
-        
-        // Close all other tooltips
-        document.querySelectorAll('.map-hotspot.tooltip-open').forEach(h => {
-          h.classList.remove('tooltip-open');
-        });
-        
-        if (!isOpen) {
-          hotspot.classList.add('tooltip-open');
-        }
+        activeSpot === spot ? hide(false) : show(spot);
       });
     });
-    
-    // Close tooltips when clicking map
-    mapContainer.addEventListener('click', () => {
-      document.querySelectorAll('.map-hotspot.tooltip-open').forEach(h => {
-        h.classList.remove('tooltip-open');
-      });
-    });
-    
-    // Close on Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        document.querySelectorAll('.map-hotspot.tooltip-open').forEach(h => {
-          h.classList.remove('tooltip-open');
-        });
-      }
-    });
+    map.addEventListener('click', function (e) { if (!card.contains(e.target)) hide(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && activeSpot) hide(true); });
+    document.addEventListener('click', function (e) { if (activeSpot && !map.contains(e.target) && !card.contains(e.target)) hide(false); });
   }
 
-  // ---------- Lazy Loading with Fade-in ----------
-  function initLazyLoading() {
-    const images = document.querySelectorAll('img[loading="lazy"]');
-    
-    if ('IntersectionObserver' in window) {
-      const imageObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            img.classList.add('lazy-loaded');
-            imageObserver.unobserve(img);
-          }
-        });
-      }, { rootMargin: '50px 0px' });
-      
-      images.forEach(img => imageObserver.observe(img));
-    } else {
-      // Fallback for older browsers
-      images.forEach(img => img.classList.add('lazy-loaded'));
+  
+
+  /* ---------- 4. Lightbox gallery ------------------------------
+     Any <img> inside .gallery becomes clickable.                */
+  function initLightbox() {
+    var gallery = document.querySelector('.gallery');
+    if (!gallery || typeof HTMLDialogElement === 'undefined') return;
+    var imgs = Array.from(gallery.querySelectorAll('img'));
+    if (!imgs.length) return;
+    var box = document.createElement('dialog');
+    box.className = 'lightbox';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    box.setAttribute('aria-label', t('galleryLabel'));
+    box.hidden = true;
+    box.innerHTML = '<button type="button" class="lb-btn lb-close"></button>' +
+      '<button type="button" class="lb-btn lb-prev"></button>' +
+      '<figure><img alt=""><figcaption></figcaption></figure>' +
+      '<button type="button" class="lb-btn lb-next"></button>';
+    var closeBtn = box.querySelector('.lb-close');
+    var prev = box.querySelector('.lb-prev');
+    var next = box.querySelector('.lb-next');
+    closeBtn.textContent = '×'; prev.textContent = '‹'; next.textContent = '›';
+    closeBtn.setAttribute('aria-label', t('lightboxClose'));
+    prev.setAttribute('aria-label', t('lightboxPrev'));
+    next.setAttribute('aria-label', t('lightboxNext'));
+    document.body.appendChild(box);
+    var big = box.querySelector('img'), caption = box.querySelector('figcaption');
+    var index = 0, opener;
+    function render() {
+      var img = imgs[index];
+      big.src = img.currentSrc || img.src;
+      big.alt = img.alt;
+      caption.textContent = (img.dataset.caption || img.alt || '') + ' — ' +
+        t('photoCounter', { current: index + 1, total: imgs.length });
     }
-  }
+    function open(i) {
+      opener = document.activeElement;
+      index = i;
+      render();
+      box.hidden = false;
+      box.showModal();
+      box.classList.add('is-open');
+      document.documentElement.classList.add('lightbox-open');
+      closeBtn.focus();
+      document.addEventListener('keydown', onKeydown);
+    }
+    function close() {
+      if (box.hidden || !box.classList.contains('is-open')) return;
+      box.classList.remove('is-open');
+      document.documentElement.classList.remove('lightbox-open');
+      document.removeEventListener('keydown', onKeydown);
+      box.close();
+      box.hidden = true;
+      if (opener && opener.isConnected) opener.focus();
+    }
+    function step(delta) { index = (index + delta + imgs.length) % imgs.length; render(); }
+    function onKeydown(e) {
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+    }
 
-  // ---------- Skip Link Focus Fix ----------
-  function initSkipLinks() {
-    const skipLinks = document.querySelectorAll('.skip-link');
-    skipLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        const targetId = link.getAttribute('href').substring(1);
-        const target = document.getElementById(targetId);
-        if (target) {
-          target.setAttribute('tabindex', '-1');
-          target.focus();
-        }
-      });
+    imgs.forEach(function (img, i) {
+      var button = img.closest('button');
+      if (!button) return;
+      button.addEventListener('click', function () { open(i); });
     });
+    box.addEventListener('cancel', function (e) { e.preventDefault(); close(); });
+    closeBtn.addEventListener('click', close);
+    prev.addEventListener('click', function () { step(-1); });
+    next.addEventListener('click', function () { step(1); });
+    box.addEventListener('click', function (e) { if (e.target === box) close(); });
   }
 
-  // ---------- Initialize All Features ----------
+  
+
+  /* ---------- 5. Lazy media fade-in ----------------------------
+     Native loading="lazy" does the fetching; this observer only
+     adds the fade-in class. Browsers without native lazy loading
+     fetch normally; the observer is not a network-loading polyfill.  */
+  function initLazyMedia() {
+    var media = document.querySelectorAll('img[loading="lazy"]');
+    if (!('IntersectionObserver' in window)) {
+      media.forEach(function (m) { m.classList.add('loaded'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        function loaded() { el.classList.add('loaded'); }
+        if (el.complete) loaded();
+        else { el.addEventListener('load', loaded, { once: true }); el.addEventListener('error', loaded, { once: true }); }
+        io.unobserve(el);
+      });
+    }, { rootMargin: '200px' });
+    media.forEach(function (m) { io.observe(m); });
+  }
+
+  
+
+  /* Scroll-timeline fallback. Observe one marker instead of running
+     continuous scroll handlers; the marker occupies no document flow. */
+  function initScrollHeader() {
+    var header = document.querySelector('.site-header');
+    if (!header || !('IntersectionObserver' in window)) return;
+    if (window.CSS && CSS.supports('animation-timeline: scroll()') &&
+        CSS.supports('animation-range: 0px 160px')) return;
+    var marker = document.createElement('span');
+    marker.setAttribute('aria-hidden', 'true');
+    marker.style.cssText = 'position:absolute;top:120px;left:0;width:1px;height:1px;pointer-events:none;';
+    document.body.prepend(marker);
+    var observer = new IntersectionObserver(function (entries) {
+      var entry = entries[0];
+      header.classList.toggle('header-scrolled', !entry.isIntersecting && entry.boundingClientRect.top < 0);
+    });
+    observer.observe(marker);
+  }
+
+  /* ---------- boot ------------------------------------------- */
   function init() {
-    initMobileNav();
-    initThemeToggle();
+    var saved = savedTheme();
+    applyTheme(saved === 'dark' || saved === 'light' ? saved : systemTheme());
+    var header = document.querySelector('.site-header .wrap');
+    if (header) {
+      buildThemeToggle(header);
+      buildDrawer(header);
+    }
+    initHotspots();
     initLightbox();
-    initMapHotspots();
-    initLazyLoading();
-    initSkipLinks();
-    
-    console.log('Liwan Lake Park Guide enhancements loaded');
+    initLazyMedia();
+    initScrollHeader();
+    document.documentElement.classList.add('js-ready');
   }
-
-  // Run on DOM ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
   }
 })();
+

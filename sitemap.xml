@@ -4,6 +4,7 @@
   <url><loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/</loc><lastmod>2026-09-22</lastmod><priority>1.0</priority></url>
   <url>
     <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-guangzhou/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-guangzhou/"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/parke-livankhu-guangzhou/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwan-hu-gongyuan-guide/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-guangzhou/"/>
@@ -18,13 +19,17 @@
   <url>
     <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/parke-livankhu-guangzhou/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-guangzhou/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/parke-livankhu-guangzhou/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwan-hu-gongyuan-guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-guangzhou/"/>
     <lastmod>2026-09-22</lastmod><priority>0.8</priority>
   </url>
   <url>
     <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwan-hu-gongyuan-guide/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-guangzhou/"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/parke-livankhu-guangzhou/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwan-hu-gongyuan-guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-guangzhou/"/>
     <lastmod>2026-09-22</lastmod><priority>0.8</priority>
   </url>
 </urlset>

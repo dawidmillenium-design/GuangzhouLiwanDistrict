@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f3e2c7"/><stop offset="1" stop-color="#e8d3b3"/>
+    </linearGradient>
+    <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a8bfa8"/><stop offset="1" stop-color="#7d9a85"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="380" fill="url(#sky)"/>
+  <rect y="380" width="800" height="220" fill="url(#lake)"/>
+  <circle cx="620" cy="110" r="55" fill="#f0c98f" opacity=".8"/>
+  <g fill="#6b4a34">
+    <rect x="330" y="250" width="140" height="70"/>
+    <path d="M300 255 Q400 190 500 255 L485 255 Q400 205 315 255 Z"/>
+    <path d="M315 230 Q400 165 485 230 L470 230 Q400 180 330 230 Z"/>
+  </g>
+  <g fill="#5c4a3a" opacity=".55">
+    <rect x="330" y="430" width="140" height="60"/>
+    <path d="M300 432 Q400 500 500 432 L485 432 Q400 485 315 432 Z"/>
+  </g>
+  <g stroke="#4d6b5a" stroke-width="6" fill="none" opacity=".7">
+    <path d="M80 380 q10 -60 0 -110 M110 380 q-8 -50 6 -95 M690 380 q12 -55 2 -100"/>
+  </g>
+  <text x="400" y="570" text-anchor="middle" font-family="Georgia,serif" font-size="26" fill="#f6efe2">Lakeside Pavilion — Liwan Lake Park</text>
+</svg>
