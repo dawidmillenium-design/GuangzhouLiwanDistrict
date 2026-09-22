@@ -723,3 +723,143 @@ html[lang^="zh"] .hero h1, html[lang^="zh"] article h1 { line-height: 1.4; overf
 .hotspot-card { position: relative; inset: auto; translate: none; width: 100%; max-height: none; animation: none; padding: 24px 64px 24px 24px; margin-top: -12px; }
 .hotspot-close { width: 44px; height: 44px; }
 .lb-btn { background: #29251f; }
+
+/* Canton hero system: shared by every page, with native-language HTML copy.
+   Decorative pavilion art is deliberately identified as an illustration.
+   No animation or external fonts; one shared lightweight local illustration. */
+.canton-hero {
+  --hero-jade: oklch(33% .055 165);
+  --hero-cream: oklch(96% .022 85);
+  --hero-rust: oklch(49% .12 38);
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(170px, 1fr);
+  gap: clamp(20px, 4vw, 42px);
+  align-items: center;
+  position: relative;
+  isolation: isolate;
+  padding: clamp(24px, 4vw, 40px);
+  margin-block: 8px 32px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--card);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+}
+.canton-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 6px;
+  background: linear-gradient(90deg, var(--hero-jade) 65%, var(--hero-rust) 65% 84%, oklch(75% .09 80) 84%);
+}
+.canton-hero-home { padding-top: clamp(24px, 4vw, 52px); }
+.canton-hero__copy { min-width: 0; }
+.canton-hero .canton-hero__eyebrow {
+  font: 600 .72rem/1.6 var(--font-sans);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--jade);
+  margin: 0 0 12px;
+}
+.canton-hero .canton-hero__culture {
+  font: italic .95rem/1.5 var(--font-serif);
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+.canton-hero h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.7rem, 1.2rem + 1.8vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1.16;
+  letter-spacing: -.025em;
+  overflow-wrap: anywhere;
+  margin: 0 0 18px;
+  max-width: 22ch;
+}
+.canton-hero h1 span { color: var(--jade); }
+.canton-hero .canton-hero__intro {
+  color: var(--muted);
+  font-size: clamp(.98rem, .94rem + .2vw, 1.08rem);
+  line-height: 1.7;
+  max-width: 48ch;
+  margin: 0 0 22px;
+}
+.canton-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 46px;
+  padding: 10px 18px;
+  border: 1px solid var(--hero-jade);
+  border-radius: 6px;
+  background: var(--hero-jade);
+  color: var(--hero-cream);
+  font: 600 .86rem/1.5 var(--font-sans);
+}
+.canton-hero__cta:hover { color: var(--hero-cream); background: oklch(27% .045 165); border-color: transparent; }
+.canton-hero__languages { margin-top: 24px; font-family: var(--font-sans); }
+.canton-hero__languages > span { display: block; font-size: .7rem; color: var(--muted); margin-bottom: 4px; }
+.canton-hero__languages > div { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.canton-hero__languages a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: .82rem;
+  border-bottom: 1px solid transparent;
+  background: none;
+}
+.canton-hero__languages a[aria-current="page"] { color: var(--ink); font-weight: 700; border-bottom-color: var(--jade); }
+.canton-hero__art {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  min-height: 340px;
+  padding: 54px 18px 28px;
+  border-radius: 110px 110px 10px 10px;
+  background-color: var(--hero-jade);
+  background-image: repeating-linear-gradient(90deg, transparent 0 23px, oklch(96% .022 85 / .055) 23px 24px);
+  color: var(--hero-cream);
+  text-align: center;
+}
+.canton-hero__window {
+  position: relative;
+  aspect-ratio: 1;
+  width: 100%;
+  border-radius: 50%;
+  border: 5px solid oklch(82% .065 80);
+  outline: 1px solid oklch(82% .065 80 / .45);
+  outline-offset: 7px;
+  background: url("img/liwan-lake-park-pavilion-reflection.svg") center 40% / 135% auto no-repeat;
+  box-shadow: inset 0 0 0 1px oklch(30% .03 80);
+}
+.canton-hero__seal {
+  position: absolute;
+  top: 24px;
+  right: 14px;
+  z-index: 1;
+  padding: 8px 6px;
+  border: 1px solid oklch(88% .06 80);
+  background: var(--hero-rust);
+  color: var(--hero-cream);
+  font: 600 .85rem/1.4 var(--font-serif);
+  letter-spacing: .12em;
+}
+.canton-hero__art-name { margin-top: 28px; font: 600 .88rem/1.5 var(--font-sans); }
+.canton-hero__art-caption { margin-top: 7px; font: .7rem/1.6 var(--font-sans); opacity: .85; }
+html[lang^="zh"] .canton-hero h1 { max-width: 16em; font-family: "Songti SC", "Noto Serif SC", var(--font-serif); line-height: 1.45; letter-spacing: .02em; }
+html[lang="ru"] .canton-hero h1 { font-size: clamp(1.65rem, 1.15rem + 1.7vw, 2.35rem); line-height: 1.25; }
+@media (max-width: 640px) {
+  .canton-hero { grid-template-columns: 1fr; gap: 24px; border-radius: 14px; }
+  .canton-hero h1 { max-width: none; }
+  .canton-hero__art { min-height: 0; border-radius: 100px 100px 8px 8px; width: min(100%, 240px); justify-self: center; padding: 28px 32px 20px; }
+  .canton-hero__window { width: min(100%, 165px); align-self: center; }
+  .canton-hero__seal { top: 18px; right: 20px; font-size: .75rem; }
+  .canton-hero__art-name { margin-top: 20px; }
+}
+@media print {
+  .canton-hero { display: block; border: 0; padding: 0; box-shadow: none; }
+  .canton-hero__art, .canton-hero__languages, .canton-hero__cta { display: none; }
+}
