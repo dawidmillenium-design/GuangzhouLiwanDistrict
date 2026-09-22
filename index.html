@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,10 @@
 <meta property="og:title" content="Liwan Lake Park, Guangzhou — Complete Visitor Guide">
 <meta property="og:description" content="Transport, opening hours, photo spots, Cantonese opera culture and food around Liwan Lake Park (荔湾湖公园) in old Guangzhou.">
 <meta property="og:url" content="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/">
-<meta property="og:image" content="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/assets/img/liwan-lake-park-pavilion-reflection.svg">
+<meta property="og:image" content="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/assets/img/liwan-lake-park-social.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="zh_CN">
 <meta property="og:locale:alternate" content="ru_RU">
@@ -21,11 +24,11 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Liwan Lake Park, Guangzhou — Complete Visitor Guide">
 <meta name="twitter:description" content="Old-town lake park guide: opera, pavilions, lotus, Xiguan food.">
-<meta name="twitter:image" content="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/assets/img/liwan-lake-park-pavilion-reflection.svg">
+<meta name="twitter:image" content="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/assets/img/liwan-lake-park-social.png">
 <!-- WeChat / Weibo pick up og:* plus these itemprops -->
 <meta itemprop="name" content="Liwan Lake Park, Guangzhou — Complete Visitor Guide">
 <meta itemprop="description" content="荔湾湖公园完整指南：交通、开放时间、拍照机位、粤曲与西关美食。">
-<meta itemprop="image" content="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/assets/img/liwan-lake-park-pavilion-reflection.svg">
+<meta itemprop="image" content="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/assets/img/liwan-lake-park-social.png">
 
 <link rel="stylesheet" href="assets/style.css">
 <link rel="canonical" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/">
@@ -63,12 +66,6 @@
         "addressCountry": "CN"
       },
       "geo": { "@type": "GeoCoordinates", "latitude": 23.1213, "longitude": 113.2374 },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-        "opens": "06:00",
-        "closes": "22:00"
-      },
       "isAccessibleForFree": true,
       "publicAccess": true
     },
@@ -95,7 +92,7 @@
       <a href="ru/parke-livankhu-guangzhou/" hreflang="ru">RU</a>
       <a href="zh/liwan-hu-gongyuan-guide/" hreflang="zh-Hans">中文</a>
     </nav>
-    <!-- app.js injects the theme toggle and hamburger button here -->
+    <!-- app.js progressively enhances this header with theme and menu controls. -->
   </div>
 </header>
 
@@ -125,7 +122,7 @@
   <!-- Interactive map with hotspots (vanilla JS tooltips) -->
   <section class="section" aria-labelledby="map-heading">
     <h2 id="map-heading">Explore the park map</h2>
-    <p class="sub">Tap a marker to learn about each key spot. Schematic map — not to scale.</p>
+    <p class="sub">Tap a marker to learn about each key spot. Schematic illustration — not a navigation map.</p>
     <div class="park-map" role="group" aria-label="Schematic map of Liwan Lake Park">
       <svg viewBox="0 0 800 420" aria-hidden="true">
         <rect width="800" height="420" fill="oklch(93% 0.03 145 / .35)"/>
@@ -145,9 +142,9 @@
         data-spot-desc="Arched bridge linking the lake arms; best at golden hour for backlit rooflines."
         aria-label="Map spot: Moon Bridge">2</button>
       <button type="button" class="hotspot" style="--x:28%;--y:62%"
-        data-spot-title="Opera Corner"
-        data-spot-desc="Informal Cantonese opera singing most mornings — listen from the edge of the circle."
-        aria-label="Map spot: Opera Corner">3</button>
+        data-spot-title="Photo Spot"
+        data-spot-desc="A suggested viewpoint for the lakeside pavilions; check sightlines when you arrive."
+        aria-label="Map spot: Photo Spot">3</button>
       <button type="button" class="hotspot" style="--x:82%;--y:64%"
         data-spot-title="Tea House Row"
         data-spot-desc="Exit east to Longjin West Road for morning dim sum with the post-tai-chi crowd."
@@ -155,23 +152,15 @@
     </div>
   </section>
 
-  <!-- Gallery: click any image for the lightbox -->
+  <!-- Gallery buttons work with keyboard as well as touch. -->
   <section class="section" aria-labelledby="gallery-heading">
     <h2 id="gallery-heading">Photo gallery</h2>
     <p class="sub">Illustrated previews — replace with your original photos for image-SEO impact.</p>
     <div class="gallery">
-      <img src="assets/img/liwan-lake-park-pavilion-reflection.svg"
-           alt="Traditional pavilion reflected in the lake at Liwan Lake Park in Guangzhou's Liwan District"
-           data-caption="Lakeside pavilion reflections on a calm morning" loading="lazy" width="800" height="600">
-      <img src="assets/img/liwan-lake-park-moon-bridge-sunset.svg"
-           alt="Moon bridge at Liwan Lake Park silhouetted against golden hour light"
-           data-caption="Moon bridge at golden hour" loading="lazy" width="800" height="600">
-      <img src="assets/img/liwan-lake-park-lotus-summer.svg"
-           alt="Pink lotus flowers blooming on the lake at Liwan Lake Park in summer"
-           data-caption="Lotus season, June to August" loading="lazy" width="800" height="600">
-      <img src="assets/img/liwan-lake-park-cantonese-opera-local-life.svg"
-           alt="Local singers performing Cantonese opera in a pavilion at Liwan Lake Park"
-           data-caption="Morning Cantonese opera singing circle" loading="lazy" width="800" height="600">
+      <button type="button" aria-label="View image: Lakeside pavilion reflections on a calm morning"><img src="assets/img/liwan-lake-park-pavilion-reflection.svg" alt="Illustration of a traditional pavilion reflected in Liwan Lake" data-caption="Lakeside pavilion reflections on a calm morning" loading="lazy" decoding="async" width="800" height="600"></button>
+      <button type="button" aria-label="View image: Moon bridge at golden hour"><img src="assets/img/liwan-lake-park-moon-bridge-sunset.svg" alt="Illustration of a moon bridge at sunset" data-caption="Moon bridge at golden hour" loading="lazy" decoding="async" width="800" height="600"></button>
+      <button type="button" aria-label="View image: Lotus season, June to August"><img src="assets/img/liwan-lake-park-lotus-summer.svg" alt="Illustration of pink lotus flowers on Liwan Lake" data-caption="Lotus season, June to August" loading="lazy" decoding="async" width="800" height="600"></button>
+      <button type="button" aria-label="View image: Morning Cantonese opera singing circle"><img src="assets/img/liwan-lake-park-cantonese-opera-local-life.svg" alt="Illustration of a Cantonese opera gathering in a park pavilion" data-caption="Morning Cantonese opera singing circle" loading="lazy" decoding="async" width="800" height="600"></button>
     </div>
   </section>
 

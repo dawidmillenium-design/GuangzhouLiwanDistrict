@@ -7,8 +7,7 @@
      4. Lightbox   — gallery viewer with prev/next + keyboard
      5. LazyMedia  — IntersectionObserver fade-in fallback
    The script progressively enhances ANY page containing the
-   existing markup patterns, so /zh and /ru pages get the same
-   behavior with zero HTML changes (translate I18N only).
+   existing markup patterns, so /zh and /ru pages share the same behavior and translations.
    ============================================================ */
 (function () {
   'use strict';
@@ -90,32 +89,38 @@
   }
 
   // React to OS-level changes when the user has not chosen manually.
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
-    if (!localStorage.getItem(THEME_KEY)) applyTheme(systemTheme());
-  });
+  var scheme = window.matchMedia('(prefers-color-scheme: dark)');
+  function savedTheme() { try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; } }
+  function onSchemeChange() { if (!savedTheme()) { applyTheme(systemTheme()); syncThemeButton(); } }
+  if (scheme.addEventListener) scheme.addEventListener('change', onSchemeChange);
+  else if (scheme.addListener) scheme.addListener(onSchemeChange);
+  var themeButton;
+  function syncThemeButton() {
+    if (!themeButton) return;
+    var dark = currentTheme() === 'dark';
+    themeButton.setAttribute('aria-label', dark ? t('themeToLight') : t('themeToDark'));
+    themeButton.setAttribute('aria-pressed', String(dark));
+    themeButton.innerHTML = dark
+      ? '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.5" y1="4.5" x2="6.5" y2="6.5"/><line x1="17.5" y1="17.5" x2="19.5" y2="19.5"/><line x1="4.5" y1="19.5" x2="6.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="19.5" y2="4.5"/></g></svg>'
+      : '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.6 14.4A8.8 8.8 0 0 1 9.6 3.4a.7.7 0 0 0-.9-.9 10.2 10.2 0 1 0 12.8 12.8.7.7 0 0 0-.9-.9Z"/></svg>';
+  }
 
   function buildThemeToggle(header) {
     var btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'theme-toggle';
-    btn.setAttribute('aria-live', 'polite');
-    function sync() {
-      var dark = currentTheme() === 'dark';
-      btn.setAttribute('aria-label', dark ? t('themeToLight') : t('themeToDark'));
-      btn.setAttribute('aria-pressed', String(dark));
-      btn.innerHTML = dark
-        ? '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.5" y1="4.5" x2="6.5" y2="6.5"/><line x1="17.5" y1="17.5" x2="19.5" y2="19.5"/><line x1="4.5" y1="19.5" x2="6.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="19.5" y2="4.5"/></g></svg>'
-        : '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.6 14.4A8.8 8.8 0 0 1 9.6 3.4a.7.7 0 0 0-.9-.9 10.2 10.2 0 1 0 12.8 12.8.7.7 0 0 0-.9-.9Z"/></svg>';
-    }
+    themeButton = btn;
     btn.addEventListener('click', function () {
       var next = currentTheme() === 'dark' ? 'light' : 'dark';
-      localStorage.setItem(THEME_KEY, next);
+      try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* private browsing: theme still works on this page */ }
       applyTheme(next);
-      sync();
+      syncThemeButton();
     });
-    sync();
+    syncThemeButton();
     header.appendChild(btn);
   }
+
+  
 
   /* ---------- 2. Mobile navigation drawer ----------------------
      CRITICAL FIX: the old CSS hid .nav below 640px with no
@@ -127,8 +132,6 @@
   function buildDrawer(header) {
     var nav = header.querySelector('.nav');
     if (!nav) return;
-
-    // Hamburger button (injected, so old pages get it for free)
     var burger = document.createElement('button');
     burger.type = 'button';
     burger.className = 'nav-burger';
@@ -138,67 +141,64 @@
     burger.innerHTML = '<span></span><span></span><span></span>';
     header.appendChild(burger);
 
-    // Drawer panel = cloned nav links (desktop nav stays untouched)
     var drawer = document.createElement('nav');
     drawer.id = 'mobile-drawer';
     drawer.className = 'drawer';
     drawer.setAttribute('aria-label', t('menuOpen'));
     drawer.hidden = true;
-    Array.prototype.forEach.call(nav.querySelectorAll('a'), function (a) {
-      var link = a.cloneNode(true);
-      link.setAttribute('tabindex', '-1');
-      drawer.appendChild(link);
-    });
-
+    nav.querySelectorAll('a').forEach(function (a) { drawer.appendChild(a.cloneNode(true)); });
     var backdrop = document.createElement('div');
     backdrop.className = 'drawer-backdrop';
     backdrop.hidden = true;
+    document.body.append(backdrop, drawer);
+    var mq = window.matchMedia('(min-width: 641px)');
+    var hideTimer;
 
-    document.body.appendChild(backdrop);
-    document.body.appendChild(drawer);
-
-    var lastFocused = null;
-
-    function open() {
-      lastFocused = document.activeElement;
-      drawer.hidden = false;
-      backdrop.hidden = false;
-      // force reflow so the CSS transition runs
-      void drawer.offsetWidth;
-      document.documentElement.classList.add('drawer-open'); // locks scroll (CSS)
-      burger.setAttribute('aria-expanded', 'true');
-      burger.setAttribute('aria-label', t('menuClose'));
-      burger.classList.add('is-open');
-      var first = drawer.querySelector('a');
-      drawer.querySelectorAll('a').forEach(function (a) { a.removeAttribute('tabindex'); });
-      if (first) first.focus();
-      document.addEventListener('keydown', onKeydown);
-    }
-    function close() {
+    function close(restoreFocus) {
+      if (burger.getAttribute('aria-expanded') !== 'true') return;
       document.documentElement.classList.remove('drawer-open');
       burger.setAttribute('aria-expanded', 'false');
       burger.setAttribute('aria-label', t('menuOpen'));
       burger.classList.remove('is-open');
       document.removeEventListener('keydown', onKeydown);
-      // wait for the slide-out transition, then hide
-      window.setTimeout(function () {
-        drawer.hidden = true;
-        backdrop.hidden = true;
-      }, 260);
-      drawer.querySelectorAll('a').forEach(function (a) { a.setAttribute('tabindex', '-1'); });
-      if (lastFocused) lastFocused.focus();
+      clearTimeout(hideTimer);
+      // Remove the drawer from keyboard access as soon as it closes.
+      drawer.inert = true;
+      hideTimer = setTimeout(function () { drawer.hidden = true; backdrop.hidden = true; }, 260);
+      if (restoreFocus) burger.focus();
     }
-    function onKeydown(e) { if (e.key === 'Escape') close(); }
-
-    burger.addEventListener('click', function () {
-      burger.getAttribute('aria-expanded') === 'true' ? close() : open();
-    });
-    backdrop.addEventListener('click', close);
-    // auto-close if viewport grows back to desktop while open
-    window.matchMedia('(min-width: 641px)').addEventListener('change', function (mq) {
-      if (mq.matches && burger.getAttribute('aria-expanded') === 'true') close();
-    });
+    function open() {
+      clearTimeout(hideTimer); // rapid open/close must not hide the reopened panel
+      drawer.hidden = false;
+      drawer.inert = false;
+      backdrop.hidden = false;
+      void drawer.offsetWidth;
+      document.documentElement.classList.add('drawer-open');
+      burger.setAttribute('aria-expanded', 'true');
+      burger.setAttribute('aria-label', t('menuClose'));
+      burger.classList.add('is-open');
+      document.addEventListener('keydown', onKeydown);
+      var first = drawer.querySelector('a');
+      if (first) first.focus();
+    }
+    function onKeydown(e) {
+      if (e.key === 'Escape') { e.preventDefault(); close(true); }
+      if (e.key !== 'Tab') return;
+      var links = drawer.querySelectorAll('a');
+      if (!links.length) return;
+      var first = links[0], last = links[links.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+    burger.addEventListener('click', function () { burger.getAttribute('aria-expanded') === 'true' ? close(true) : open(); });
+    backdrop.addEventListener('click', function () { close(true); });
+    drawer.addEventListener('click', function (e) { if (e.target.closest('a')) close(false); });
+    function onResize() { if (mq.matches) close(false); }
+    if (mq.addEventListener) mq.addEventListener('change', onResize);
+    else if (mq.addListener) mq.addListener(onResize);
   }
+
+  
 
   /* ---------- 3. Map hotspots ----------------------------------
      Markup contract (see index.html):
@@ -209,122 +209,133 @@
   function initHotspots() {
     var map = document.querySelector('.park-map');
     if (!map) return;
-
     var card = document.createElement('div');
     card.className = 'hotspot-card';
-    card.setAttribute('role', 'dialog');
+    card.setAttribute('role', 'region');
+    card.setAttribute('aria-live', 'polite');
     card.hidden = true;
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'hotspot-close';
+    close.setAttribute('aria-label', t('hotspotClose'));
+    close.textContent = '×';
+    var title = document.createElement('h3');
+    var desc = document.createElement('p');
+    card.append(close, title, desc);
     map.appendChild(card);
-
     var activeSpot = null;
-
-    function show(spot) {
-      activeSpot = spot;
-      card.innerHTML =
-        '<button type="button" class="hotspot-close" aria-label="' + t('hotspotClose') + '">×</button>' +
-        '<h3>' + spot.getAttribute('data-spot-title') + '</h3>' +
-        '<p>' + spot.getAttribute('data-spot-desc') + '</p>';
-      // position near the hotspot, flipped into the map bounds
-      var x = parseFloat(spot.style.getPropertyValue('--x'));
-      var y = parseFloat(spot.style.getPropertyValue('--y'));
-      card.style.left = Math.min(Math.max(x, 18), 82) + '%';
-      card.style.top = Math.min(Math.max(y, 20), 78) + '%';
-      card.hidden = false;
-      spot.setAttribute('aria-expanded', 'true');
-      card.querySelector('.hotspot-close').addEventListener('click', hide);
-    }
-    function hide() {
-      if (activeSpot) activeSpot.setAttribute('aria-expanded', 'false');
+    function hide(restoreFocus) {
+      if (!activeSpot) return;
+      activeSpot.setAttribute('aria-expanded', 'false');
+      if (restoreFocus) activeSpot.focus();
       activeSpot = null;
       card.hidden = true;
     }
-
+    function show(spot) {
+      if (activeSpot) hide(false);
+      activeSpot = spot;
+      title.textContent = spot.dataset.spotTitle || '';
+      desc.textContent = spot.dataset.spotDesc || '';
+      var x = parseFloat(spot.style.getPropertyValue('--x'));
+      var y = parseFloat(spot.style.getPropertyValue('--y'));
+      card.style.left = Math.min(Math.max(x || 50, 18), 82) + '%';
+      card.style.top = Math.min(Math.max(y || 50, 20), 78) + '%';
+      card.hidden = false;
+      spot.setAttribute('aria-expanded', 'true');
+    }
+    close.addEventListener('click', function () { hide(true); });
     map.querySelectorAll('.hotspot').forEach(function (spot) {
       spot.setAttribute('aria-expanded', 'false');
       spot.addEventListener('click', function (e) {
         e.stopPropagation();
-        activeSpot === spot ? hide() : show(spot);
+        activeSpot === spot ? hide(false) : show(spot);
       });
     });
-    map.addEventListener('click', hide);
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && !card.hidden) hide();
-    });
+    map.addEventListener('click', function (e) { if (!card.contains(e.target)) hide(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && activeSpot) hide(true); });
+    document.addEventListener('click', function (e) { if (activeSpot && !map.contains(e.target)) hide(false); });
   }
+
+  
 
   /* ---------- 4. Lightbox gallery ------------------------------
      Any <img> inside .gallery becomes clickable.                */
   function initLightbox() {
     var gallery = document.querySelector('.gallery');
     if (!gallery) return;
-
-    var imgs = Array.prototype.slice.call(gallery.querySelectorAll('img'));
+    var imgs = Array.from(gallery.querySelectorAll('img'));
     if (!imgs.length) return;
-
-    // overlay skeleton
     var box = document.createElement('div');
     box.className = 'lightbox';
     box.setAttribute('role', 'dialog');
     box.setAttribute('aria-modal', 'true');
     box.setAttribute('aria-label', t('galleryLabel'));
     box.hidden = true;
-    box.innerHTML =
-      '<button type="button" class="lb-btn lb-close" aria-label="' + t('lightboxClose') + '">×</button>' +
-      '<button type="button" class="lb-btn lb-prev" aria-label="' + t('lightboxPrev') + '">‹</button>' +
+    box.innerHTML = '<button type="button" class="lb-btn lb-close"></button>' +
+      '<button type="button" class="lb-btn lb-prev"></button>' +
       '<figure><img alt=""><figcaption></figcaption></figure>' +
-      '<button type="button" class="lb-btn lb-next" aria-label="' + t('lightboxNext') + '">›</button>';
+      '<button type="button" class="lb-btn lb-next"></button>';
+    var closeBtn = box.querySelector('.lb-close');
+    var prev = box.querySelector('.lb-prev');
+    var next = box.querySelector('.lb-next');
+    closeBtn.textContent = '×'; prev.textContent = '‹'; next.textContent = '›';
+    closeBtn.setAttribute('aria-label', t('lightboxClose'));
+    prev.setAttribute('aria-label', t('lightboxPrev'));
+    next.setAttribute('aria-label', t('lightboxNext'));
     document.body.appendChild(box);
-
-    var big = box.querySelector('img');
-    var caption = box.querySelector('figcaption');
-    var index = 0;
-    var lastFocused = null;
-
+    var big = box.querySelector('img'), caption = box.querySelector('figcaption');
+    var index = 0, opener, hideTimer;
     function render() {
       var img = imgs[index];
       big.src = img.currentSrc || img.src;
       big.alt = img.alt;
-      caption.textContent = (img.getAttribute('data-caption') || img.alt || '') +
-        ' — ' + t('photoCounter', { current: index + 1, total: imgs.length });
+      caption.textContent = (img.dataset.caption || img.alt || '') + ' — ' +
+        t('photoCounter', { current: index + 1, total: imgs.length });
     }
     function open(i) {
-      lastFocused = document.activeElement;
+      clearTimeout(hideTimer);
+      opener = document.activeElement;
       index = i;
       render();
       box.hidden = false;
       void box.offsetWidth;
       box.classList.add('is-open');
-      document.documentElement.classList.add('drawer-open'); // reuse scroll lock
-      box.querySelector('.lb-close').focus();
+      document.documentElement.classList.add('lightbox-open');
+      closeBtn.focus();
       document.addEventListener('keydown', onKeydown);
     }
     function close() {
+      if (box.hidden || !box.classList.contains('is-open')) return;
       box.classList.remove('is-open');
-      document.documentElement.classList.remove('drawer-open');
+      document.documentElement.classList.remove('lightbox-open');
       document.removeEventListener('keydown', onKeydown);
-      window.setTimeout(function () { box.hidden = true; }, 220);
-      if (lastFocused) lastFocused.focus();
+      hideTimer = setTimeout(function () { box.hidden = true; }, 220);
+      if (opener && opener.isConnected) opener.focus();
     }
-    function step(d) { index = (index + d + imgs.length) % imgs.length; render(); }
+    function step(delta) { index = (index + delta + imgs.length) % imgs.length; render(); }
     function onKeydown(e) {
-      if (e.key === 'Escape') close();
-      else if (e.key === 'ArrowLeft') step(-1);
-      else if (e.key === 'ArrowRight') step(1);
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+      else if (e.key === 'Tab') {
+        var buttons = [closeBtn, prev, next];
+        var n = buttons.indexOf(document.activeElement);
+        e.preventDefault();
+        buttons[(n + (e.shiftKey ? 2 : 1)) % 3].focus();
+      }
     }
-
     imgs.forEach(function (img, i) {
-      img.setAttribute('tabindex', '0');
-      img.setAttribute('role', 'button');
-      img.addEventListener('click', function () { open(i); });
-      img.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); }
-      });
+      var button = img.closest('button');
+      if (!button) return;
+      button.addEventListener('click', function () { open(i); });
     });
-    box.querySelector('.lb-close').addEventListener('click', close);
-    box.querySelector('.lb-prev').addEventListener('click', function () { step(-1); });
-    box.querySelector('.lb-next').addEventListener('click', function () { step(1); });
+    closeBtn.addEventListener('click', close);
+    prev.addEventListener('click', function () { step(-1); });
+    next.addEventListener('click', function () { step(1); });
     box.addEventListener('click', function (e) { if (e.target === box) close(); });
   }
+
+  
 
   /* ---------- 5. Lazy media fade-in ----------------------------
      Native loading="lazy" does the fetching; this observer only
@@ -337,16 +348,18 @@
     }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          var el = entry.target;
-          if (el.complete) el.classList.add('loaded');
-          else el.addEventListener('load', function () { el.classList.add('loaded'); }, { once: true });
-          io.unobserve(el);
-        }
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        function loaded() { el.classList.add('loaded'); }
+        if (el.complete) loaded();
+        else { el.addEventListener('load', loaded, { once: true }); el.addEventListener('error', loaded, { once: true }); }
+        io.unobserve(el);
       });
     }, { rootMargin: '200px' });
     media.forEach(function (m) { io.observe(m); });
   }
+
+  
 
   /* ---------- boot ------------------------------------------- */
   function init() {
