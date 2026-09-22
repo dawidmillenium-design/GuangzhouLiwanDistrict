@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d9a06b"/><stop offset="1" stop-color="#b0764f"/>
+    </linearGradient>
+    <linearGradient id="water2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8f7d68"/><stop offset="1" stop-color="#5f5548"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="360" fill="url(#dusk)"/>
+  <rect y="360" width="800" height="240" fill="url(#water2)"/>
+  <path d="M180 360 A220 130 0 0 1 620 360 L580 360 A180 92 0 0 0 220 360 Z" fill="#7a5a41"/>
+  <path d="M180 430 A220 130 0 0 0 620 430 L580 430 A180 92 0 0 1 220 430 Z" fill="#7a5a41" opacity=".4"/>
+  <g fill="#f3dfae">
+    <circle cx="140" cy="180" r="10"/><circle cx="660" cy="150" r="10"/>
+    <rect x="136" y="150" width="8" height="30"/><rect x="656" y="120" width="8" height="30"/>
+  </g>
+  <text x="400" y="570" text-anchor="middle" font-family="Georgia,serif" font-size="26" fill="#f6efe2">Moon Bridge at Golden Hour — Liwan Lake Park</text>
+</svg>
