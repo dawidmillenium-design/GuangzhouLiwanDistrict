@@ -358,6 +358,24 @@
 
   
 
+  /* Scroll-timeline fallback. Observe one marker instead of running
+     continuous scroll handlers; the marker occupies no document flow. */
+  function initScrollHeader() {
+    var header = document.querySelector('.site-header');
+    if (!header || !('IntersectionObserver' in window)) return;
+    if (window.CSS && CSS.supports('animation-timeline: scroll()') &&
+        CSS.supports('animation-range: 0px 160px')) return;
+    var marker = document.createElement('span');
+    marker.setAttribute('aria-hidden', 'true');
+    marker.style.cssText = 'position:absolute;top:120px;left:0;width:1px;height:1px;pointer-events:none;';
+    document.body.prepend(marker);
+    var observer = new IntersectionObserver(function (entries) {
+      var entry = entries[0];
+      header.classList.toggle('header-scrolled', !entry.isIntersecting && entry.boundingClientRect.top < 0);
+    });
+    observer.observe(marker);
+  }
+
   /* ---------- boot ------------------------------------------- */
   function init() {
     var saved = savedTheme();
@@ -370,6 +388,7 @@
     initHotspots();
     initLightbox();
     initLazyMedia();
+    initScrollHeader();
     document.documentElement.classList.add('js-ready');
   }
   if (document.readyState === 'loading') {

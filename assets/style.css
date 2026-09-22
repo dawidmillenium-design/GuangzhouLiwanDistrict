@@ -863,3 +863,65 @@ html[lang="ru"] .canton-hero h1 { font-size: clamp(1.65rem, 1.15rem + 1.7vw, 2.3
   .canton-hero { display: block; border: 0; padding: 0; box-shadow: none; }
   .canton-hero__art, .canton-hero__languages, .canton-hero__cta { display: none; }
 }
+
+/* Scroll-driven sticky navigation: compositor transforms avoid layout jumps.
+   Native scroll timelines enhance supported browsers; JS supplies a simple
+   two-state IntersectionObserver fallback elsewhere. */
+.site-header { isolation: isolate; }
+.site-header .wrap { transform-origin: center top; }
+@media (prefers-reduced-motion: no-preference) {
+  .site-header { transition: background-color .25s ease, box-shadow .25s ease; }
+  .site-header .wrap { transition: transform .25s var(--ease-out); }
+  .site-header.header-scrolled {
+    background: var(--card);
+    box-shadow: 0 8px 24px oklch(15% .02 70 / .12);
+  }
+  @media (min-width: 900px) {
+    .site-header.header-scrolled .wrap { transform: scale(1.025); }
+  }
+}
+@supports (animation-timeline: scroll()) and (animation-range: 0px 160px) {
+  @media (prefers-reduced-motion: no-preference) {
+    .site-header {
+      animation: canton-header-surface linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0px 160px;
+    }
+    @media (min-width: 900px) {
+      .site-header .wrap {
+        animation: canton-header-expand linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0px 160px;
+      }
+    }
+    /* Decorative reading-progress indicator follows the whole document. */
+    .site-header::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 -1px;
+      height: 2px;
+      pointer-events: none;
+      background: linear-gradient(90deg, var(--jade), var(--accent));
+      transform-origin: left center;
+      animation: canton-reading-progress linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+}
+@keyframes canton-header-surface {
+  from { background-color: color-mix(in oklch, var(--card) 82%, transparent); box-shadow: none; }
+  to { background-color: var(--card); box-shadow: 0 8px 24px oklch(15% .02 70 / .12); }
+}
+@keyframes canton-header-expand {
+  from { transform: scale(1); }
+  to { transform: scale(1.025); }
+}
+@keyframes canton-reading-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header, .site-header .wrap { animation: none !important; transition: none; transform: none; }
+  .site-header::after { display: none; }
+}
+@media print { .site-header::after { display: none; } }
