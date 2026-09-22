@@ -273,10 +273,6 @@ document.addEventListener('DOMContentLoaded', function() {
       // Update button icon
       toggleBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
     });
-
-    // Set initial button icon based on current theme
-    var initialTheme = document.documentElement.getAttribute('data-theme');
-    toggleBtn.textContent = initialTheme === 'dark' ? '☀️' : '🌙';
   }
 });
 </script>
