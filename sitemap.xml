@@ -32,14 +32,244 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-guangzhou/"/>
     <lastmod>2026-09-22</lastmod><priority>0.8</priority>
   </url>
-  <url><loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/cantonese-opera-liwan-lake-park/</loc><lastmod>2026-09-23</lastmod><priority>0.8</priority></url>
-  <url><loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/history-of-liwan-lake-park/</loc><lastmod>2026-09-23</lastmod><priority>0.8</priority></url>
-  <url><loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-boat-rental-guide/</loc><lastmod>2026-09-23</lastmod><priority>0.8</priority></url>
-  <url><loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-family-guide/</loc><lastmod>2026-09-23</lastmod><priority>0.8</priority></url>
-  <url><loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-lotus-season-guide/</loc><lastmod>2026-09-23</lastmod><priority>0.8</priority></url>
-  <url><loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-rainy-day-guide/</loc><lastmod>2026-09-23</lastmod><priority>0.8</priority></url>
-  <url><loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-vs-yuexiu-park-comparison/</loc><lastmod>2026-09-23</lastmod><priority>0.8</priority></url>
-  <url><loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/morning-liwan-lake-park-local-life/</loc><lastmod>2026-09-23</lastmod><priority>0.8</priority></url>
-  <url><loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/xiguan-food-guide-liwan-lake-park/</loc><lastmod>2026-09-23</lastmod><priority>0.8</priority></url>
-  <url><loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/xiguan-walking-tour-liwan-lake-yongqingfang/</loc><lastmod>2026-09-23</lastmod><priority>0.8</priority></url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/history-of-liwan-lake-park/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/history-of-liwan-lake-park/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/istoriya-parka-livankhu/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-lishi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/history-of-liwan-lake-park/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/istoriya-parka-livankhu/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/history-of-liwan-lake-park/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/istoriya-parka-livankhu/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-lishi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/history-of-liwan-lake-park/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-lishi/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/history-of-liwan-lake-park/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/istoriya-parka-livankhu/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-lishi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/history-of-liwan-lake-park/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-boat-rental-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-boat-rental-guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/arenda-lodok-park-livankhu/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-zuchuan/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-boat-rental-guide/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/arenda-lodok-park-livankhu/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-boat-rental-guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/arenda-lodok-park-livankhu/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-zuchuan/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-boat-rental-guide/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-zuchuan/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-boat-rental-guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/arenda-lodok-park-livankhu/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-zuchuan/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-boat-rental-guide/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/cantonese-opera-liwan-lake-park/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/cantonese-opera-liwan-lake-park/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/yueju-opera-park-livankhu/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-yueju/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/cantonese-opera-liwan-lake-park/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/yueju-opera-park-livankhu/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/cantonese-opera-liwan-lake-park/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/yueju-opera-park-livankhu/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-yueju/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/cantonese-opera-liwan-lake-park/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-yueju/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/cantonese-opera-liwan-lake-park/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/yueju-opera-park-livankhu/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-yueju/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/cantonese-opera-liwan-lake-park/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-lotus-season-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-lotus-season-guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/sezon-lotosov-park-livankhu/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-hehua/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-lotus-season-guide/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/sezon-lotosov-park-livankhu/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-lotus-season-guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/sezon-lotosov-park-livankhu/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-hehua/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-lotus-season-guide/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-hehua/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-lotus-season-guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/sezon-lotosov-park-livankhu/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-hehua/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-lotus-season-guide/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/morning-liwan-lake-park-local-life/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/morning-liwan-lake-park-local-life/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/utro-v-parke-livankhu/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-zaochen/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/morning-liwan-lake-park-local-life/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/utro-v-parke-livankhu/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/morning-liwan-lake-park-local-life/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/utro-v-parke-livankhu/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-zaochen/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/morning-liwan-lake-park-local-life/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-zaochen/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/morning-liwan-lake-park-local-life/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/utro-v-parke-livankhu/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-zaochen/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/morning-liwan-lake-park-local-life/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-rainy-day-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-rainy-day-guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/park-livankhu-v-dozhd/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-yutian/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-rainy-day-guide/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/park-livankhu-v-dozhd/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-rainy-day-guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/park-livankhu-v-dozhd/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-yutian/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-rainy-day-guide/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-yutian/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-rainy-day-guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/park-livankhu-v-dozhd/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-yutian/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-rainy-day-guide/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-family-guide/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-family-guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/park-livankhu-s-detmi/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-qinzi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-family-guide/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/park-livankhu-s-detmi/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-family-guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/park-livankhu-s-detmi/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-qinzi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-family-guide/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-qinzi/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-family-guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/park-livankhu-s-detmi/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-gongyuan-qinzi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-family-guide/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-vs-yuexiu-park-comparison/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-vs-yuexiu-park-comparison/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/park-livankhu-protiv-yuesyu/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-yuexiu-gongyuan-duibi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-vs-yuexiu-park-comparison/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/park-livankhu-protiv-yuesyu/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-vs-yuexiu-park-comparison/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/park-livankhu-protiv-yuesyu/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-yuexiu-gongyuan-duibi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-vs-yuexiu-park-comparison/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-yuexiu-gongyuan-duibi/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-vs-yuexiu-park-comparison/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/park-livankhu-protiv-yuesyu/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/liwanhu-yuexiu-gongyuan-duibi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/liwan-lake-park-vs-yuexiu-park-comparison/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/xiguan-walking-tour-liwan-lake-yongqingfang/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/xiguan-walking-tour-liwan-lake-yongqingfang/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/peshiy-tur-siguan/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/xiguan-buxing-luxian/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/xiguan-walking-tour-liwan-lake-yongqingfang/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/peshiy-tur-siguan/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/xiguan-walking-tour-liwan-lake-yongqingfang/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/peshiy-tur-siguan/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/xiguan-buxing-luxian/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/xiguan-walking-tour-liwan-lake-yongqingfang/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/xiguan-buxing-luxian/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/xiguan-walking-tour-liwan-lake-yongqingfang/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/peshiy-tur-siguan/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/xiguan-buxing-luxian/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/xiguan-walking-tour-liwan-lake-yongqingfang/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/xiguan-food-guide-liwan-lake-park/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/xiguan-food-guide-liwan-lake-park/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/gid-po-ede-siguan/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/xiguan-meishi-zhinan/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/xiguan-food-guide-liwan-lake-park/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/gid-po-ede-siguan/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/xiguan-food-guide-liwan-lake-park/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/gid-po-ede-siguan/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/xiguan-meishi-zhinan/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/xiguan-food-guide-liwan-lake-park/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/xiguan-meishi-zhinan/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/xiguan-food-guide-liwan-lake-park/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/ru/gid-po-ede-siguan/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/zh/xiguan-meishi-zhinan/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dawidmillenium-design.github.io/GuangzhouLiwanDistrict/xiguan-food-guide-liwan-lake-park/"/>
+    <lastmod>2026-09-23</lastmod><priority>0.8</priority>
+  </url>
 </urlset>
